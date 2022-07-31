@@ -22,24 +22,7 @@
     <label for="address" class="form-label">Dirección</label>
     <input type="text" class="form-control" id="address">
   </div>
-  <div class="col-md-6">
-    <label for="cityBirt" class="form-label">País de nacimiento</label>
-    <select class="form-select" id="cityBirt">
-        <option selected>Seleccionar un país</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-    </select>
-  </div>
-  <div class="col-md-6">
-    <label for="cityBirt" class="form-label">Ciudad de nacimiento</label>
-    <select class="form-select" id="cityBirt">
-        <option selected>Seleccionar una ciudad</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-    </select>
-  </div>
+  <location></location>
   <div class="col-md-6">
     <label for="cityBirt" class="form-label">Cargo</label>
     <select class="form-select" multiple  id="cityBirt">

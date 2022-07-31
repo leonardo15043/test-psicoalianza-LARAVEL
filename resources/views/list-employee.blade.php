@@ -71,4 +71,5 @@
     </tbody>
 
   </table>
+
 @endsection 

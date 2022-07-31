@@ -13,6 +13,7 @@ use App\Http\Controllers\EmployeeController;
 |
 */
 
-
-Route::resource('/', EmployeeController::class);
-Route::resource('employee', EmployeeController::class);
+Route::group(['middleware' => ['cors']], function () {
+    Route::resource('/', EmployeeController::class);
+    Route::resource('employee', EmployeeController::class);
+});
