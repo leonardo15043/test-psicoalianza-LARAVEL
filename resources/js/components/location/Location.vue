@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-md-6">
                     <label for="cityBirt" class="form-label">Ciudad de nacimiento</label>
-                    <select class="form-select" id="cityBirt">
+                    <select class="form-select" id="id_cityBirth" name="id_cityBirth">
                         <option selected>Seleccionar una ciudad</option>
                         <option v-for="(city,i) in cities" v-bind:key="i" v-bind:value="i">
                             {{ city }}

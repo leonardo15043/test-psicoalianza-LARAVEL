@@ -8,3 +8,7 @@
 @import '~bootstrap/scss/bootstrap';
 
 @import 'layout';
+
+.invalid-feedback{
+    display: block !important;
+}

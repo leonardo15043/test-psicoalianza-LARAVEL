@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -34,7 +35,17 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'firstname' => 'required|max:15',
+            'lastname' => 'required|max:15',
+            'identification' => 'required|max:12',
+            'phone' => 'required|max:12',
+            'address' => 'required|max:50',
+        ]);
+
+        Employee::create($request->all());
+
+        return redirect()->route('employee.index')->with('success','Empleado creado correctamente.');
     }
 
     /**

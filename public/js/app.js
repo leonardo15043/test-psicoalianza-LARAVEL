@@ -5369,7 +5369,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   \*****************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var process = __webpack_require__(/*! process/browser.js */ "./node_modules/process/browser.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -5398,7 +5397,6 @@ Vue.component('location', (__webpack_require__(/*! ./components/location/Locatio
 var app = new Vue({
   el: '#app'
 });
-console.log(process.env.LOG_CHANNEL);
 
 /***/ }),
 
@@ -28247,7 +28245,10 @@ var render = function () {
         _vm._v(" "),
         _c(
           "select",
-          { staticClass: "form-select", attrs: { id: "cityBirt" } },
+          {
+            staticClass: "form-select",
+            attrs: { id: "id_cityBirth", name: "id_cityBirth" },
+          },
           [
             _c("option", { attrs: { selected: "" } }, [
               _vm._v("Seleccionar una ciudad"),
