@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
+use App\Models\Employee_as_position;
+use App\Models\Position;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -14,7 +16,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::all();
+        $employees = Employee::all(); 
         return view('list-employee', [ "employees" => $employees ]);
     }
 
@@ -23,9 +25,12 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create( Employee $employee )
     {
-        return view('action-employee');
+        $position = Position::all();
+        $employees = Employee::all(); 
+        $listPositions = [];
+        return view('action-employee', [ 'employee'=>$employee, 'positions' => $position, 'employees'=>$employees, 'listPositions'=>$listPositions ]);
     }
 
     /**
@@ -41,10 +46,17 @@ class EmployeeController extends Controller
             'lastname' => 'required|max:15',
             'identification' => 'required|max:12',
             'phone' => 'required|max:12',
-            'address' => 'required|max:50',
+            'address' => 'required|max:50'
         ]);
 
-        Employee::create($request->all());
+        $id_employee = Employee::create($request->all())->id;
+
+        for ($i=0; $i < count($request->position); $i++) { 
+            Employee_as_position::create(array(
+                'id_employee' => $id_employee,
+                'id_position' => $request->position[$i]
+            ));
+        }
 
         return redirect()->route('employee.index')->with('success','Empleado creado correctamente.');
     }
@@ -69,7 +81,14 @@ class EmployeeController extends Controller
     public function edit($id)
     {
         $employee = Employee::find($id); 
-        return view('action-employee', [ 'employee'=>$employee ]);
+        $position = Position::all();
+        $positionEmployee = Employee_as_position::where('id_employee',$id)->get();
+        $listPositions = [];
+        foreach ($positionEmployee as $key => $value) {
+            array_push($listPositions, $positionEmployee[$key]['id_position']);
+        }
+        $employees = Employee::all(); 
+        return view('action-employee', [ 'employee'=>$employee, 'positions' => $position, 'employees'=>$employees, 'listPositions'=> $listPositions ]);
     }
 
     /**
@@ -79,7 +98,7 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Employee $employee)
     {
         $request->validate([
             'firstname' => 'required|max:15',
@@ -89,7 +108,7 @@ class EmployeeController extends Controller
             'address' => 'required|max:50',
         ]);
 
-        Employee::update($request->all());
+        $employee->update($request->all());
 
         return redirect()->route('employee.index')->with('success','Empleado actualizado correctamente.');
     }
@@ -100,8 +119,9 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Employee $employee)
     {
-        //
+        $employee->delete();
+        return redirect()->route('employee.index')->with('success','Empleado eliminado correctamente.');
     }
 }

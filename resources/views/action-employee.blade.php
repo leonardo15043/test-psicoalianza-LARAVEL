@@ -4,12 +4,11 @@
 
 @if ($employee['id'])
 <form action="{{ route('employee.update',$employee['id']) }}" method="POST" class="row g-3">
+@method('PUT')
 @else
 <form action="{{ route('employee.store') }}" method="POST" class="row g-3">
 @endif
-
   @csrf
-  @method('PUT')
   <div class="col-md-6">
     <label for="firtsname" class="form-label">Nombres</label>
     <input type="text" class="form-control" id="firstname" name="firstname" value="{{ $employee['firstname'] }}">
@@ -45,30 +44,22 @@
       <div class="invalid-feedback">{{ $message }}</div>
     @enderror
   </div>
-  <location></location>
+  <location :employee="{{ $employee }}"></location>
   <div class="col-md-6">
     <label for="cityBirt" class="form-label">Cargo</label>
-    <select class="form-select" multiple id="position" name="position" value="{{ $employee['position'] }}">
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-        <option value="3">Three</option>
-        <option value="3">Three</option>
-        <option value="3">Three</option>
-        <option value="3">Three</option>
-        <option value="3">Three</option>
-        <option value="3">Three</option>
-        <option value="3">Three</option>
-        <option value="3">Three</option>
+    <select class="form-select" multiple id="position" name="position[]" >
+        @foreach( $positions as $position )
+          <option value="{{ $position->id }}" {{ in_array( $position->id , $listPositions ) ? 'selected' : '' }}>{{ $position->name }}</option>
+        @endforeach
     </select>
   </div>
   <div class="col-md-6">
     <label for="cityBirt" class="form-label">Jefe</label>
-    <select class="form-select" id="manager" name="manager" value="{{ $employee['manager'] }}">
-        <option selected>Seleccionar un jefe</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+    <select class="form-select" id="manager" name="manager">
+        <option value="">Seleccionar un jefe</option>
+        @foreach( $employees as $em )
+          <option value="{{ $em->id }}" {{ $employee['manager'] == $em->id ? 'selected' : '' }}  >{{ $em->firstname.' '.$em->lastname }}</option>
+        @endforeach
     </select>
   </div>
   <div class="col-12">

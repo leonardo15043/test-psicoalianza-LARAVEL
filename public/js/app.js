@@ -5302,6 +5302,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ["employee"],
   data: function data() {
     return {
       countries: [],
@@ -5312,7 +5313,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _this = this;
 
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var contries;
+      var contries, cities;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -5322,9 +5323,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
             case 2:
               contries = _context.sent;
+
+              if (!_this.employee.cityBirth) {
+                _context.next = 8;
+                break;
+              }
+
+              _context.next = 6;
+              return (0,_services_LocationService__WEBPACK_IMPORTED_MODULE_0__.getCities)(_this.employee.country);
+
+            case 6:
+              cities = _context.sent;
+              _this.cities = cities.data.data;
+
+            case 8:
               _this.countries = contries.data.data;
 
-            case 4:
+            case 9:
             case "end":
               return _context.stop();
           }
@@ -5348,9 +5363,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 cities = _context2.sent;
                 _this2.cities = cities.data.data;
-                console.log(cities.data.data);
 
-              case 5:
+              case 4:
               case "end":
                 return _context2.stop();
             }
@@ -28212,18 +28226,24 @@ var render = function () {
           "select",
           {
             staticClass: "form-select",
-            attrs: { id: "cityBirt" },
+            attrs: { id: "country", name: "country" },
             on: { change: _vm.selectCity },
           },
           [
-            _c("option", { attrs: { selected: "" } }, [
+            _c("option", { attrs: { value: "" } }, [
               _vm._v("Seleccionar un país"),
             ]),
             _vm._v(" "),
             _vm._l(_vm.countries, function (country, i) {
               return _c(
                 "option",
-                { key: i, domProps: { value: country.name } },
+                {
+                  key: i,
+                  domProps: {
+                    value: country.name,
+                    selected: _vm.employee.country === country.name,
+                  },
+                },
                 [
                   _vm._v(
                     "\n                         " +
@@ -28247,21 +28267,31 @@ var render = function () {
           "select",
           {
             staticClass: "form-select",
-            attrs: { id: "id_cityBirth", name: "id_cityBirth" },
+            attrs: { id: "cityBirth", name: "cityBirth" },
           },
           [
-            _c("option", { attrs: { selected: "" } }, [
+            _c("option", { attrs: { selected: "", value: "" } }, [
               _vm._v("Seleccionar una ciudad"),
             ]),
             _vm._v(" "),
             _vm._l(_vm.cities, function (city, i) {
-              return _c("option", { key: i, domProps: { value: i } }, [
-                _vm._v(
-                  "\n                         " +
-                    _vm._s(city) +
-                    "\n                     "
-                ),
-              ])
+              return _c(
+                "option",
+                {
+                  key: i,
+                  domProps: {
+                    value: city,
+                    selected: _vm.employee.cityBirth === city,
+                  },
+                },
+                [
+                  _vm._v(
+                    "\n                         " +
+                      _vm._s(city) +
+                      "\n                     "
+                  ),
+                ]
+              )
             }),
           ],
           2

@@ -24,10 +24,15 @@
             <td>{{ $employee->identification }}</td>
             <td>{{ $employee->address }}</td>
             <td>{{ $employee->phone }}</td>
-            <td>{{ $employee->manager }}</td>
+            <td>{{ $employee->cityBirth }}</td>
             <td>
-                <a class="btn btn-primary" href="{{ route('employee.edit',$employee->id) }}">Editar</a>
-                <a class="btn btn-danger" href="{{ route('employee.destroy',$employee->id) }}">Eliminar</a>
+                
+                <form action="{{ route('employee.destroy',$employee->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <a class="btn btn-primary" href="{{ route('employee.edit',$employee->id) }}">Editar</a>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
             </td>
         </tr>
         @endforeach

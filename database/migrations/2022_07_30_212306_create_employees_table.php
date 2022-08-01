@@ -19,10 +19,10 @@ class CreateEmployeesTable extends Migration
             $table->string('lastname',15);
             $table->string('identification',12)->unique();
             $table->string('address',50);
-            $table->bigInteger('phone')->unique()->length(12);
-            $table->integer("manager")->unsigned();
-            $table->foreign('manager')->references('id')->on('employees');
-            $table->integer("id_cityBirth");
+            $table->bigInteger('phone')->length(12);
+            $table->integer('manager')->unsigned();
+            $table->string('country');
+            $table->string('cityBirth');
             $table->timestamps();
         });
     }
