@@ -1,64 +1,52 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://psicoalianza.com/images/social-media-psa.png" width="400"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+## Test PsicoAlianza
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+La empresa Alianza requiere una aplicación web que permita registrar empleados, asociarlos a
+uno o varios cargos y definir cuál es su jefe inmediato.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Proceso de instalación y configuración
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+#### 1 - Dependencias de Composer
 
-## Learning Laravel
+```composer install```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+#### 2 - Crear archivo .env
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Este archivo contiene todas las variables de entorno del sistema y debe estar creado en la raíz del proyecto basado en el archivo de ejemplo **.env.example**
 
-## Laravel Sponsors
+#### 3 - Dependencias de npm
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```npm install```
 
-### Premium Partners
+#### 4 - Crear base de datos
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Vamos a la carpeta **/database** y creamos el archivo **database.sqlite**
 
-## Contributing
+#### 5 - Ejecutar migraciones
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Las migraciones son básicamente la estructura de la base de datos que ya esta construida en el código para pasarla a SQLITE, esto lo podemos hacer con el siguiente comando.
 
-## Code of Conduct
+```php artisan migrate```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+si en este punto tenemos problemas ejecutando las migraciones, seguramente sera por las relaciones entre las tablas, en este caso podemos ejecutar cada migracion por separado ```php artisan migrate --path=/database/migrations/2022_07_30_223147_create_positions_table.php```
 
-## Security Vulnerabilities
+#### 6 - Subir datos de prueba 
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Para este ejercicio se subiran datos de prueba para la lista de cargos y para el listado de empleados 
 
-## License
+```php artisan db:seed --class=PositionSeeder```
+```php artisan db:seed --class=EmployeeSeeder```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+#### 7 - Ejecutar proyecto
+
+```php artisan serve```
+```npm run dev```
+
+
+NOTAS: 
+
+- El listado de ciudades y países se hizo con un api externa para simular las peticiones asincronas, algunas veces esta api se demora en responder o no trae las ciudades correspondientes de cada país
+- Se agrego un **middleware** que permite realizar peticiones http evitando problemas de CORS
+
