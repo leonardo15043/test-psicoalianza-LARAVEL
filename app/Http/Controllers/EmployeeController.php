@@ -14,7 +14,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return view('list-employee');
+        $employees = Employee::all();
+        return view('list-employee', [ "employees" => $employees ]);
     }
 
     /**
@@ -67,7 +68,8 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $employee = Employee::find($id); 
+        return view('action-employee', [ 'employee'=>$employee ]);
     }
 
     /**
@@ -79,7 +81,17 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'firstname' => 'required|max:15',
+            'lastname' => 'required|max:15',
+            'identification' => 'required|max:12',
+            'phone' => 'required|max:12',
+            'address' => 'required|max:50',
+        ]);
+
+        Employee::update($request->all());
+
+        return redirect()->route('employee.index')->with('success','Empleado actualizado correctamente.');
     }
 
     /**

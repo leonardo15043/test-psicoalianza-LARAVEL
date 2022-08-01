@@ -16,60 +16,22 @@
         </tr>
     </thead>
     <tbody>
+        @foreach( $employees as $employee )
         <tr>
             <th scope="row">1</th>
-            <td>Leonardo Arturo</td>
-            <td>Hernandez Espinosa</td>
-            <td>10222334455</td>
-            <td>Cll falsa 123</td>
-            <td>5252525252</td>
-            <td>Bogotá</td>
+            <td>{{ $employee->firstname }}</td>
+            <td>{{ $employee->lastname }}</td>
+            <td>{{ $employee->identification }}</td>
+            <td>{{ $employee->address }}</td>
+            <td>{{ $employee->phone }}</td>
+            <td>{{ $employee->manager }}</td>
             <td>
-                <button type="button" class="btn btn-primary">Editar</button>
-                <button type="button" class="btn btn-danger">Eliminar</button>
+                <a class="btn btn-primary" href="{{ route('employee.edit',$employee->id) }}">Editar</a>
+                <a class="btn btn-danger" href="{{ route('employee.destroy',$employee->id) }}">Eliminar</a>
             </td>
         </tr>
-        <tr>
-            <th scope="row">1</th>
-            <td>Leonardo Arturo</td>
-            <td>Hernandez Espinosa</td>
-            <td>10222334455</td>
-            <td>Cll falsa 123</td>
-            <td>5252525252</td>
-            <td>Bogotá</td>
-            <td>
-                <button type="button" class="btn btn-primary">Editar</button>
-                <button type="button" class="btn btn-danger">Eliminar</button>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">1</th>
-            <td>Leonardo Arturo</td>
-            <td>Hernandez Espinosa</td>
-            <td>10222334455</td>
-            <td>Cll falsa 123</td>
-            <td>5252525252</td>
-            <td>Bogotá</td>
-            <td>
-                <button type="button" class="btn btn-primary">Editar</button>
-                <button type="button" class="btn btn-danger">Eliminar</button>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">1</th>
-            <td>Leonardo Arturo</td>
-            <td>Hernandez Espinosa</td>
-            <td>10222334455</td>
-            <td>Cll falsa 123</td>
-            <td>5252525252</td>
-            <td>Bogotá</td>
-            <td>
-                <button type="button" class="btn btn-primary">Editar</button>
-                <button type="button" class="btn btn-danger">Eliminar</button>
-            </td>
-        </tr>
+        @endforeach
     </tbody>
 
   </table>
-
-@endsection 
+@endsection
